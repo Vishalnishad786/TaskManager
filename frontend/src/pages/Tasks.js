@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 const Tasks = () => {
   const { user } = useAuth();
   const [tasks, setTasks] = useState([]);
@@ -21,7 +23,7 @@ const Tasks = () => {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/tasks');
+      const { data } = await axios.get(`${API_URL}/tasks`);
       setTasks(data);
     } catch (error) {
       toast.error('Failed to fetch tasks');
@@ -30,7 +32,7 @@ const Tasks = () => {
 
   const fetchProjects = useCallback(async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/projects');
+      const { data } = await axios.get(`${API_URL}/projects`);
       setProjects(data);
     } catch (error) {
       toast.error('Failed to fetch projects');
@@ -40,7 +42,7 @@ const Tasks = () => {
   const fetchUsers = useCallback(async () => {
     if (user.role === 'admin') {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/users');
+        const { data } = await axios.get(`${API_URL}/users`);
         setUsers(data);
       } catch (error) {
         console.error('Failed to fetch users');
@@ -57,7 +59,7 @@ const Tasks = () => {
   const handleCreateTask = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/tasks', newTask);
+      await axios.post(`${API_URL}/tasks`, newTask);
       toast.success('Task created successfully');
       setShowModal(false);
       setNewTask({
@@ -76,7 +78,7 @@ const Tasks = () => {
 
   const handleUpdateStatus = async (taskId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${taskId}/status`, { status: newStatus });
+      await axios.put(`${API_URL}/tasks/${taskId}/status`, { status: newStatus });
       toast.success('Task status updated');
       fetchTasks();
     } catch (error) {

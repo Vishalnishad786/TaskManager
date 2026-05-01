@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 const Dashboard = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState({
@@ -16,7 +18,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = useCallback(async () => {
     try {
-      const { data: tasks } = await axios.get('http://localhost:5000/api/tasks');
+      const { data: tasks } = await axios.get(`${API_URL}/tasks`);
       
       const completed = tasks.filter(t => t.status === 'completed').length;
       const pending = tasks.filter(t => t.status === 'pending' || t.status === 'in-progress').length;

@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 const Projects = () => {
   const { user } = useAuth();
   const [projects, setProjects] = useState([]);
@@ -15,7 +17,7 @@ const Projects = () => {
 
   const fetchProjects = useCallback(async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/projects');
+      const { data } = await axios.get(`${API_URL}/projects`);
       setProjects(data);
     } catch (error) {
       toast.error('Failed to fetch projects');
@@ -29,7 +31,7 @@ const Projects = () => {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/projects', newProject);
+      await axios.post(`${API_URL}/projects`, newProject);
       toast.success('Project created successfully');
       setShowModal(false);
       setNewProject({ name: '', description: '' });
@@ -42,7 +44,7 @@ const Projects = () => {
   const handleDeleteProject = async (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/projects/${id}`);
+        await axios.delete(`${API_URL}/projects/${id}`);
         toast.success('Project deleted successfully');
         fetchProjects();
       } catch (error) {
