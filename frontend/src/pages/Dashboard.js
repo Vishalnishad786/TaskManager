@@ -122,7 +122,7 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://taskmanager-backend-nfx9.onrender.com/api';
+const API_URL = 'https://taskmanager-backend-nfx9.onrender.com/api';
 
 const Dashboard = () => {
   const { user } = useAuth();

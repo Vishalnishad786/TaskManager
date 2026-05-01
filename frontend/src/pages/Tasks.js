@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import toast from 'react-hot-toast';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://taskmanager-backend-nfx9.onrender.com/api' || 'http://localhost:5000/api';
 
 const Tasks = () => {
   const { user } = useAuth();

@@ -2,8 +2,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// Make sure API_URL includes /api
-const API_URL = process.env.REACT_APP_API_URL || 'https://taskmanager-backend-nfx9.onrender.com/api';
+// DIRECT HARDCODED URL - USE THIS EXACTLY
+const API_URL = 'https://taskmanager-backend-nfx9.onrender.com/api';
 
 const AuthContext = createContext();
 
@@ -25,10 +25,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      // Ensure the URL is correct
-      const url = `${API_URL}/auth/me`;
-      console.log('Fetching user from:', url);
-      const { data } = await axios.get(url);
+      const { data } = await axios.get(`${API_URL}/auth/me`);
       setUser(data);
     } catch (error) {
       console.error('Fetch user error:', error);
@@ -41,9 +38,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const url = `${API_URL}/auth/login`;
-      console.log('Login URL:', url);
-      const { data } = await axios.post(url, {
+      console.log('Login URL:', `${API_URL}/auth/login`);
+      const { data } = await axios.post(`${API_URL}/auth/login`, {
         email,
         password
       });
@@ -61,9 +57,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password, role) => {
     try {
-      const url = `${API_URL}/auth/register`;
-      console.log('Registration URL:', url);
-      const { data } = await axios.post(url, {
+      console.log('Registration URL:', `${API_URL}/auth/register`);
+      const { data } = await axios.post(`${API_URL}/auth/register`, {
         name,
         email,
         password,
